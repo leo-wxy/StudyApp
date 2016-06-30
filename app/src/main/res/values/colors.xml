@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#E91E63</color>
+    <color name="colorPrimaryDark">#c2185b</color>
+    <color name="colorAccent">#E91E63</color>
+    <color name="colorIndicator">#e040fb</color>
+
+    <color name="colorPrimaryCyan">#00bcd4</color>
+    <color name="colorPrimaryCyanDark">#0097a7</color>
+    <color name="colorAccentCyan">#00bcd4</color>
+</resources>

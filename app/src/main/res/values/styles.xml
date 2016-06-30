@@ -1,0 +1,43 @@
+<resources >
+
+    <!-- Base application theme. -->
+
+    <style name="Theme.DesignDemo" parent="Base.Theme.DesignDemo">
+
+    </style>
+
+    <style name="cyanThemes" parent="cyanTheme">
+
+    </style>
+
+    <style name="Base.Theme.DesignDemo" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimary</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorIndicator">@color/colorIndicator</item>
+    </style>
+
+    <style name="cyanTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimaryCyan</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryCyan</item>
+        <item name="colorAccent">@color/colorAccentCyan</item>
+        <item name="colorIndicator">@color/colorIndicator</item>
+    </style>
+
+    <style name="fresco_common">
+        <item name="actualImageScaleType">centerCrop</item>
+        <item name="fadeDuration">300</item>
+
+    </style>
+
+    <style name="MyCustomTabLayout" parent="Widget.Design.TabLayout">
+        <item name="tabTextAppearance">@style/MyCustomTextAppearance</item>
+    </style>
+
+    <style name="MyCustomTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="textAllCaps">false</item>
+    </style>
+
+
+
+</resources>

@@ -24,7 +24,7 @@ public class ArticleListAdapter extends BaseRecycleAdapter<Integer, ArticleListA
 
     @Override
     protected void bindDataToItemView(MViewHolder mViewHolder, Integer item) {
-        mViewHolder.tv_title.setText("niaho ");
+        mViewHolder.tv_title.setText("nihao " + item);
     }
 
     @Override

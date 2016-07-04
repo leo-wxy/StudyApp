@@ -54,10 +54,10 @@ public class ArticleFragment extends BaseFragment {
         tabLayout.addTab(tabLayout.newTab().setText(titles.get(3)));
 
         List<Fragment> fragments = new ArrayList<>();
-        fragments.add(new ListFragment());
-        fragments.add(new ListFragment());
-        fragments.add(new ListFragment());
-        fragments.add(new ListFragment());
+        fragments.add(ArticleListFragment.newInstance(0));
+        fragments.add(ArticleListFragment.newInstance(1));
+        fragments.add(ArticleListFragment.newInstance(2));
+        fragments.add(ArticleListFragment.newInstance(3));
         fragmentAdapter =
                 new ArticleFragmentAdapter(mActivity.getSupportFragmentManager(), fragments, titles);
         vp_article.setAdapter(fragmentAdapter);

@@ -2,7 +2,6 @@ package wxy.frame.finalframe;
 
 
 import android.os.Build;
-import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -30,11 +29,12 @@ public class MainActivity extends BaseActivity {
     ActionBarDrawerToggle actionBarDrawerToggle;
     ActionBar ab;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    public MainActivity() {
+        super(R.layout.activity_main);
+    }
 
+    @Override
+    public void findIds() {
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -44,17 +44,6 @@ public class MainActivity extends BaseActivity {
         // 有小箭头，并且图标可以点击
         ab.setDisplayShowHomeEnabled(false);
         ab.setTitle("文章");
-
-//        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-//        List<String> titles = new ArrayList<>();
-//        titles.add("Android");
-//        titles.add("iOS");
-//        titles.add("前端");
-//        titles.add("瞎推荐");
-//        tabLayout.addTab(tabLayout.newTab().setText(titles.get(0)));
-//        tabLayout.addTab(tabLayout.newTab().setText(titles.get(1)));
-//        tabLayout.addTab(tabLayout.newTab().setText(titles.get(2)));
-//        tabLayout.addTab(tabLayout.newTab().setText(titles.get(3)));
 
         nv_left = (NavigationView) findViewById(R.id.nv_left);
         if (nv_left != null)
@@ -97,6 +86,10 @@ public class MainActivity extends BaseActivity {
                     WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION,
                     WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         }
+    }
+
+    @Override
+    public void initViews() {
 
     }
 
@@ -142,8 +135,6 @@ public class MainActivity extends BaseActivity {
                 ft.hide(currentFragment).show(to).commit(); // 隐藏当前的fragment，显示下一个
             }
             currentFragment = to;
-        } else {
-            System.err.println("sdsds");
         }
     }
 

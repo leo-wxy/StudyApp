@@ -20,6 +20,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     private Context context;
     public LayoutInflater mLayoutInflater;
     private View view;
+    public Bundle savedInstanceState;
 
     public BaseActivity(int mLayoutId) {
         this.mLayoutId = mLayoutId;
@@ -32,6 +33,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         context = this;
         mLayoutInflater = LayoutInflater.from(this);
         view = mLayoutInflater.inflate(mLayoutId, null);
+        this.savedInstanceState = savedInstanceState;
         findIds();
         initViews();
     }

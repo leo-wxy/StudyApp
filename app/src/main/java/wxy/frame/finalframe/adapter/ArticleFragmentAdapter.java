@@ -2,33 +2,33 @@ package wxy.frame.finalframe.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentPagerAdapter;
 
 import java.util.List;
+
+import wxy.frame.finalframe.fragment.article.ArticleListFragment;
 
 /**
  * Created by xixi on 16/6/29.
  */
 
-public class ArticleFragmentAdapter extends FragmentStatePagerAdapter {
+public class ArticleFragmentAdapter extends FragmentPagerAdapter {
 
-    private List<Fragment> mFragments;
     private List<String> mTitles;
 
-    public ArticleFragmentAdapter(FragmentManager fm, List<Fragment> mFragments, List<String> mTitles) {
+    public ArticleFragmentAdapter(FragmentManager fm, List<String> mTitles) {
         super(fm);
-        this.mFragments = mFragments;
         this.mTitles = mTitles;
     }
 
     @Override
     public Fragment getItem(int position) {
-        return mFragments.get(position);
+        return ArticleListFragment.newInstance(position);
     }
 
     @Override
     public int getCount() {
-        return mFragments.size();
+        return 4;
     }
 
     @Override

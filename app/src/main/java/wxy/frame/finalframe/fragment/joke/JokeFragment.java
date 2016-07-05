@@ -1,15 +1,15 @@
-package wxy.frame.finalframe.fragment;
+package wxy.frame.finalframe.fragment.joke;
 
 import android.view.View;
 
 import wxy.frame.finalframe.R;
+import wxy.frame.finalframe.fragment.BaseFragment;
 
 /**
  * Created by xixi on 16/6/27.
  */
 
 public class JokeFragment extends BaseFragment {
-    public boolean isAdded = false;
 
     public JokeFragment() {
         super(R.layout.act_joke);
@@ -26,7 +26,6 @@ public class JokeFragment extends BaseFragment {
 
     @Override
     protected void findView(View v) {
-        isAdded = true;
 
     }
 

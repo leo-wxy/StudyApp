@@ -1,7 +1,9 @@
-package wxy.frame.finalframe.fragment;
+package wxy.frame.finalframe.fragment.article;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -11,13 +13,14 @@ import java.util.List;
 
 import wxy.frame.finalframe.R;
 import wxy.frame.finalframe.adapter.ArticleListAdapter;
+import wxy.frame.finalframe.fragment.BaseFragment;
 import wxy.frame.finalframe.widgets.AutoSwipeRefreshLayout;
 
 /**
  * Created by xixi on 16/6/27.
  */
 
-public class ArticleListFragment extends BaseFragment {
+public class ArticleListFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
     private int type;//0 android  1 ios  2 前端 3 瞎看
     private AutoSwipeRefreshLayout asr_article;
     private RecyclerView rv_article;
@@ -48,9 +51,13 @@ public class ArticleListFragment extends BaseFragment {
 
     @Override
     protected void findView(View v) {
+        System.err.println("hahahahahah");
         asr_article = (AutoSwipeRefreshLayout) v.findViewById(R.id.asr_article);
         rv_article = (RecyclerView) v.findViewById(R.id.rv_article);
         rv_article.setLayoutManager(new LinearLayoutManager(mActivity));
+//        asr_article.autoRefresh();
+        asr_article.setColorSchemeResources(R.color.colorAccent);
+        asr_article.setOnRefreshListener(this);
         List<Integer> list = new ArrayList<>();
         switch (type) {
             case 0:
@@ -81,6 +88,17 @@ public class ArticleListFragment extends BaseFragment {
 
     @Override
     protected void refreshView() {
+        asr_article.setRefreshing(true);
+        (new Handler()).postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                asr_article.setRefreshing(false);
+            }
+        }, 3000);
+    }
 
+    @Override
+    public void onRefresh() {
+        refreshView();
     }
 }

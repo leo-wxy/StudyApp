@@ -1,4 +1,4 @@
-package wxy.frame.finalframe.fragment;
+package wxy.frame.finalframe.fragment.music;
 
 import android.app.Fragment;
 

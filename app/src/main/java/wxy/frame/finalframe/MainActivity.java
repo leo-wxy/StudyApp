@@ -15,8 +15,8 @@ import android.view.WindowManager;
 
 import java.util.List;
 
-import wxy.frame.finalframe.fragment.ArticleFragment;
-import wxy.frame.finalframe.fragment.JokeFragment;
+import wxy.frame.finalframe.fragment.article.ArticleFragment;
+import wxy.frame.finalframe.fragment.joke.JokeFragment;
 
 public class MainActivity extends BaseActivity {
 

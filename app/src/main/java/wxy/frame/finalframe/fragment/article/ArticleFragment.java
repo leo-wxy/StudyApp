@@ -1,7 +1,6 @@
-package wxy.frame.finalframe.fragment;
+package wxy.frame.finalframe.fragment.article;
 
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
@@ -10,6 +9,7 @@ import java.util.List;
 
 import wxy.frame.finalframe.R;
 import wxy.frame.finalframe.adapter.ArticleFragmentAdapter;
+import wxy.frame.finalframe.fragment.BaseFragment;
 
 /**
  * Created by xixi on 16/6/27.
@@ -17,9 +17,6 @@ import wxy.frame.finalframe.adapter.ArticleFragmentAdapter;
 
 public class ArticleFragment extends BaseFragment {
 
-    public boolean isAdded = false;
-    //    RecyclerView recyclerView;
-//    ArticleListAdapter listAdapter;
     List<Integer> list = new ArrayList<>();
     ViewPager vp_article;
     ArticleFragmentAdapter fragmentAdapter;
@@ -39,10 +36,10 @@ public class ArticleFragment extends BaseFragment {
 
     @Override
     protected void findView(View v) {
-        isAdded = true;
 
         TabLayout tabLayout = (TabLayout) v.findViewById(R.id.tabs);
         vp_article = (ViewPager) v.findViewById(R.id.vp_article);
+        vp_article.setOffscreenPageLimit(4);
         List<String> titles = new ArrayList<>();
         titles.add("Android");
         titles.add("iOS");
@@ -53,29 +50,10 @@ public class ArticleFragment extends BaseFragment {
         tabLayout.addTab(tabLayout.newTab().setText(titles.get(2)));
         tabLayout.addTab(tabLayout.newTab().setText(titles.get(3)));
 
-        List<Fragment> fragments = new ArrayList<>();
-        fragments.add(ArticleListFragment.newInstance(0));
-        fragments.add(ArticleListFragment.newInstance(1));
-        fragments.add(ArticleListFragment.newInstance(2));
-        fragments.add(ArticleListFragment.newInstance(3));
         fragmentAdapter =
-                new ArticleFragmentAdapter(mActivity.getSupportFragmentManager(), fragments, titles);
+                new ArticleFragmentAdapter(mActivity.getSupportFragmentManager(), titles);
         vp_article.setAdapter(fragmentAdapter);
         tabLayout.setupWithViewPager(vp_article);
-        tabLayout.setTabsFromPagerAdapter(fragmentAdapter);
-
-
-//        recyclerView = (RecyclerView) v.findViewById(rv);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
-//        recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
-//
-//        });
-//
-//        for (int i = 0; i < 10; i++) {
-//            list.add(i);
-//        }
-//        listAdapter = new ArticleListAdapter(mActivity, list);
-//        recyclerView.setAdapter(listAdapter);
 
     }
 

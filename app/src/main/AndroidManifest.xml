@@ -20,6 +20,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- 初始化Glide的配置-->
+        <meta-data
+            android:name="wxy.frame.finalframe.image.GlideConfiguration"
+            android:value="GlideModule" />
     </application>
 
 </manifest>

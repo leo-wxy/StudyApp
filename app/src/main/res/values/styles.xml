@@ -24,11 +24,6 @@
         <item name="colorIndicator">@color/colorIndicator</item>
     </style>
 
-    <style name="fresco_common">
-        <item name="actualImageScaleType">centerCrop</item>
-        <item name="fadeDuration">300</item>
-
-    </style>
 
     <style name="MyCustomTabLayout" parent="Widget.Design.TabLayout">
         <item name="tabTextAppearance">@style/MyCustomTextAppearance</item>

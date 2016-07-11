@@ -22,7 +22,7 @@ import java.io.IOException;
 
 import wxy.frame.finalframe.BaseActivity;
 import wxy.frame.finalframe.finals.AppConfig;
-import wxy.frame.finalframe.util.StringUtil;
+import wxy.frame.finalframe.util.StringUtils;
 
 /**
  * 图片工具类 包括网络以及本地图片加载  图片裁剪  图片保存等图片相关功能
@@ -130,7 +130,7 @@ public class ImageUtil {
      * @param filename
      */
     public static void takePhoto(Activity context, String filename) {
-        Uri imageuri = Uri.parse(StringUtil.getFileUrlHead(2) + AppConfig.DIR_IMG + File.separator + filename);
+        Uri imageuri = Uri.parse(StringUtils.getFileUrlHead(2) + AppConfig.DIR_IMG + File.separator + filename);
         Intent intent = getIntent(DATA_WITH_CAMERA, imageuri);
         if (intent != null) {
             try {
@@ -151,7 +151,7 @@ public class ImageUtil {
      * @param filename
      */
     public static void selectFromAlbumFull(Activity context, String filename) {
-        Uri imageuri = Uri.parse(StringUtil.getFileUrlHead(2) + AppConfig.DIR_IMG + File.separator + filename);
+        Uri imageuri = Uri.parse(StringUtils.getFileUrlHead(2) + AppConfig.DIR_IMG + File.separator + filename);
         Intent intent = getIntent(DATA_WITH_PHOTO_PICKED, imageuri);
         if (intent != null) {
             try {

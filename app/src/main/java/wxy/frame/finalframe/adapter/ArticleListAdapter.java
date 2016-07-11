@@ -3,7 +3,6 @@ package wxy.frame.finalframe.adapter;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -33,13 +32,11 @@ public class ArticleListAdapter extends BaseRecycleAdapter<Integer, ArticleListA
     }
 
     public class MViewHolder extends BaseRecycleAdapter.SparseArrayViewHolder {
-        public TextView tv_title, tv1;
-        public ImageView iv;
+        public TextView tv_title;
 
         public MViewHolder(View itemView) {
             super(itemView);
             tv_title = getView(R.id.tv_title);
-
         }
 
     }

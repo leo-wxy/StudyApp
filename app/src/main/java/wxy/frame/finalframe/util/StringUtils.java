@@ -4,7 +4,7 @@ import android.text.TextUtils;
 
 /**
  */
-public class StringUtil {
+public class StringUtils {
 
     /**
      * 得到文件url前缀
@@ -204,7 +204,7 @@ public class StringUtil {
      * @return
      */
     public static String saveDecimal(int num, String str) {
-        return String.format("%1$." + num + "f", StringUtil.parseDouble((str)));
+        return String.format("%1$." + num + "f", StringUtils.parseDouble((str)));
     }
 
 }

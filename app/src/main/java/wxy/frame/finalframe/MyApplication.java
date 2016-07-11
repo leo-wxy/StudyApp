@@ -9,14 +9,14 @@ import android.app.Application;
 
 public class MyApplication extends Application {
 
-    private volatile MyApplication instance;//volatile 多线程并发处理
+    private static volatile MyApplication instance;//volatile 多线程并发处理
 
     /**
      * 单例模式
      *
      * @return
      */
-    public MyApplication getInstance() {
+    public static MyApplication getInstance() {
         if (instance == null) {
             synchronized (MyApplication.class) {
                 if (instance == null) {
@@ -49,4 +49,5 @@ public class MyApplication extends Application {
     public void onTerminate() {
         super.onTerminate();
     }
+
 }

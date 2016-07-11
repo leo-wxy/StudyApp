@@ -10,6 +10,9 @@ import java.io.File;
 
 public interface AppConfig {
 
+    //---------------是否打印日志-----------------
+    public static final boolean SHOW_LOG = true;
+
     // --------------应用缓存文件基本信息-----------------------
     /**
      * 程序在手机SDK中的主缓存目录.

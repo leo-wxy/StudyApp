@@ -1,10 +1,13 @@
 package wxy.frame.finalframe;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,6 +60,29 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (data != null) {
             intent.putExtra("data", (Parcelable) data);
             startActivity(intent);
+        }
+    }
+
+    /**
+     * 申请权限检测
+     * 目前只需要 存储空间权限 后续需添加 位置权限
+     */
+    public boolean checkPermission() {
+        if (ContextCompat.checkSelfPermission(context,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (checkPermission()) {
+            System.err.println("true");
+        } else {
+            System.err.println("false");
         }
     }
 }

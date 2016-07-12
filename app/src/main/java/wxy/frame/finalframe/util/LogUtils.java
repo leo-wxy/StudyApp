@@ -8,14 +8,13 @@ import android.util.Log;
 
 import wxy.frame.finalframe.finals.AppConfig;
 
-import static android.R.attr.type;
-
 /**
  * 自定义的日志打印工具类 可以简易的进行日志的输出显示
  */
 public class LogUtils {
 
-    private final boolean showLog = AppConfig.SHOW_LOG;
+    private static final boolean showLog = AppConfig.SHOW_LOG;
+
     public static final int V = 1;
     public static final int D = 2;
     public static final int I = 3;
@@ -26,7 +25,44 @@ public class LogUtils {
         logs(1, null, obj);
     }
 
+    public static void v(String tag, Object obj) {
+        logs(1, tag, obj);
+    }
+
+    public static void d(Object obj) {
+        logs(2, null, obj);
+    }
+
+    public static void d(String tag, Object obj) {
+        logs(2, tag, obj);
+    }
+
+    public static void i(Object obj) {
+        logs(3, null, obj);
+    }
+
+    public static void i(String tag, Object obj) {
+        logs(3, tag, obj);
+    }
+
+    public static void w(Object obj) {
+        logs(4, null, obj);
+    }
+
+    public static void w(String tag, Object obj) {
+        logs(4, tag, obj);
+    }
+
+    public static void e(Object obj) {
+        logs(5, null, obj);
+    }
+
+    public static void e(String tag, Object obj) {
+        logs(5, tag, obj);
+    }
+
     private static void logs(int logType, String tagStr, Object obj) {
+
         String msg;
         StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
 
@@ -52,7 +88,7 @@ public class LogUtils {
 
         String logStr = stringBuilder.toString();
 
-        switch (type) {
+        switch (logType) {
             case V:
                 Log.v(tag, logStr);
                 break;

@@ -27,7 +27,7 @@ public class ArticleListAdapter extends BaseRecycleAdapter<Integer, ArticleListA
     }
 
     @Override
-    public MViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    protected MViewHolder createView(ViewGroup parent, int viewType) {
         return new MViewHolder(inflateItemView(parent, R.layout.item_article));
     }
 

@@ -1,6 +1,7 @@
 package wxy.frame.finalframe.adapter;
 
 import android.content.Context;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -213,5 +214,31 @@ public abstract class BaseRecycleAdapter<T, VH extends BaseRecycleAdapter.Sparse
 
     private boolean isFooterViewPos(int position) {
         return position >= getHeadersCount() + this.getItemCount();
+    }
+
+    @Override
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+        RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
+        if (layoutManager instanceof GridLayoutManager) {//表格布局
+            final GridLayoutManager gridLayoutManager = (GridLayoutManager) layoutManager;
+            final GridLayoutManager.SpanSizeLookup spanSizeLookup = gridLayoutManager.getSpanSizeLookup();
+
+            gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+                @Override
+                public int getSpanSize(int position) {
+                    int viewType = getItemViewType(position);
+                    if (mHeaderViews.get(viewType) != null) {
+                        return gridLayoutManager.getSpanCount();
+                    } else if (mFootViews.get(viewType) != null) {
+                        return gridLayoutManager.getSpanCount();
+                    }
+                    if (spanSizeLookup != null)
+                        return spanSizeLookup.getSpanSize(position);
+                    return 1;
+                }
+            });
+            gridLayoutManager.setSpanCount(gridLayoutManager.getSpanCount());
+        }
     }
 }

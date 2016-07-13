@@ -7,7 +7,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,13 +57,12 @@ public class ArticleListFragment extends BaseFragment implements SwipeRefreshLay
         asr_article = (AutoSwipeRefreshLayout) v.findViewById(R.id.asr_article);
         rv_article = (RecyclerView) v.findViewById(R.id.rv_article);
         rv_article.setLayoutManager(new LinearLayoutManager(mActivity));
-//        asr_article.autoRefresh();
         asr_article.setColorSchemeResources(R.color.colorAccent);
         asr_article.setOnRefreshListener(this);
         List<Integer> list = new ArrayList<>();
         switch (type) {
             case 0:
-                for (int i = 0; i < 10; i++) {
+                for (int i = 0; i < 3; i++) {
                     list.add(i);
                 }
                 break;
@@ -86,9 +84,6 @@ public class ArticleListFragment extends BaseFragment implements SwipeRefreshLay
         }
 
         listAdapter = new ArticleListAdapter(mActivity, list);
-        TextView t2 = new TextView(mActivity);
-        t2.setText("你好");
-        listAdapter.addHeaderView(t2);
         rv_article.setAdapter(listAdapter);
         rv_article.addOnScrollListener(new RecyclerView.OnScrollListener() {//上滑事件监听
             @Override
@@ -100,7 +95,7 @@ public class ArticleListFragment extends BaseFragment implements SwipeRefreshLay
         listAdapter.setOnItemClickListener(new BaseRecycleAdapter.OnItemClickListener() {
             @Override
             public void onClick(int i) {
-                //TODO 添加跳转至文章详情的功能
+                //TODO 添加跳转至文章详情的功能 暂定跳转activity和bottomsheet
                 showSnack("跳转至文章" + i);//用以调试snachbar的功能
             }
         });

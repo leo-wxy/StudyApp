@@ -12,7 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 
-import wxy.frame.finalframe.util.SnachBarUtils;
+import wxy.frame.finalframe.util.SnackBarUtils;
 
 /**
  * Created by xixi on 16/6/29.
@@ -22,7 +22,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     private int mLayoutId;
     private Context context;
     public LayoutInflater mLayoutInflater;
-    private View view;
     public Bundle savedInstanceState;
 
     public BaseActivity(int mLayoutId) {
@@ -35,7 +34,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         setContentView(mLayoutId);
         context = this;
         mLayoutInflater = LayoutInflater.from(this);
-        view = mLayoutInflater.inflate(mLayoutId, null);
         this.savedInstanceState = savedInstanceState;
         findIds();
         initViews();
@@ -45,12 +43,12 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public abstract void initViews();
 
-    public void showSnack(String tip) {
-        SnachBarUtils.showSnack(view, tip);
+    public void showSnack(View view,String tip) {
+        SnackBarUtils.showSnack(view, tip);
     }
 
-    public void showSnack(String tip, String action, View.OnClickListener onClickListener) {
-        SnachBarUtils.showSnack(view, tip, action, onClickListener);
+    public void showSnack(View view, String tip, String action, View.OnClickListener onClickListener) {
+        SnackBarUtils.showSnack(view, tip, action, onClickListener);
     }
 
     public void startActivity(Class<?> cls, Object data) {
@@ -76,13 +74,4 @@ public abstract class BaseActivity extends AppCompatActivity {
         return true;
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (checkPermission()) {
-            System.err.println("true");
-        } else {
-            System.err.println("false");
-        }
-    }
 }

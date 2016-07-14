@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import wxy.frame.finalframe.BaseActivity;
-import wxy.frame.finalframe.util.SnachBarUtils;
+import wxy.frame.finalframe.util.SnackBarUtils;
 
 /**
  * Created by xixi on 16/6/27.
@@ -61,12 +61,15 @@ public abstract class BaseFragment extends Fragment {
     protected abstract void refreshView();
 
     public void showSnack(String tip) {
-        SnachBarUtils.showSnack(view, tip);
+        SnackBarUtils.showSnack(view, tip);
     }
 
     public void showSnack(String tip, String action, View.OnClickListener onClickListener) {
-        SnachBarUtils.showSnack(view, tip, action, onClickListener);
+        SnackBarUtils.showSnack(view, tip, action, onClickListener);
     }
 
-
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
 }

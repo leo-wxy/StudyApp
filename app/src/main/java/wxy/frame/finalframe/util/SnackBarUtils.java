@@ -10,7 +10,7 @@ import wxy.frame.finalframe.R;
  * Created by xixi on 16/6/29.
  */
 
-public class SnachBarUtils {
+public class SnackBarUtils {
     public static void showSnack(View view, String tip) {
         Snackbar.make(view, tip, Snackbar.LENGTH_SHORT).show();
     }

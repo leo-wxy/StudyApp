@@ -1,15 +1,23 @@
 package wxy.frame.finalframe;
 
 
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
+import android.provider.Settings;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -28,6 +36,8 @@ public class MainActivity extends BaseActivity {
     Fragment currentFragment;
     ActionBarDrawerToggle actionBarDrawerToggle;
     ActionBar ab;
+    Toolbar toolbar;
+    private static final String PACKAGE_URL_SCHEME = "package:"; // 方案
 
     public MainActivity() {
         super(R.layout.activity_main);
@@ -35,7 +45,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void findIds() {
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         ab = getSupportActionBar();
@@ -60,7 +70,6 @@ public class MainActivity extends BaseActivity {
                 }
                 // 解决重叠问题
                 getSupportFragmentManager().beginTransaction().show(articleFragment)
-                        .hide(jokeFragment)
                         .commit();
             }
         } else {
@@ -85,6 +94,25 @@ public class MainActivity extends BaseActivity {
             window.setFlags(
                     WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION,
                     WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        }
+
+        if (ContextCompat.checkSelfPermission(MainActivity.this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE)) {//弹出请求权限dialog
+
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        1);
+            } else {//选择不在询问后下次进入的操作
+                showSnack(toolbar, "没有权限无法进行后续的操作", "前往设置", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startAppSettings();
+                    }
+                });
+            }
         }
     }
 
@@ -136,6 +164,45 @@ public class MainActivity extends BaseActivity {
             }
             currentFragment = to;
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case 1: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {//给予权限
+                    showSnack(toolbar, "设置成功");
+                } else {//拒绝权限
+                    showSnack(toolbar, "没有权限无法进行后续的操作", "继续设置", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            ActivityCompat.requestPermissions(MainActivity.this,
+                                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                                    1);
+                        }
+                    });
+                }
+
+            }
+        }
+    }
+
+    /**
+     * 跳转到应用系统设置界面  申请权限
+     */
+    private void startAppSettings() {
+        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        intent.setData(Uri.parse(PACKAGE_URL_SCHEME + getPackageName()));
+        startActivity(intent);
     }
 
 }

@@ -17,7 +17,6 @@ import wxy.frame.finalframe.fragment.BaseFragment;
 
 public class ArticleFragment extends BaseFragment {
 
-    List<Integer> list = new ArrayList<>();
     ViewPager vp_article;
     ArticleFragmentAdapter fragmentAdapter;
 

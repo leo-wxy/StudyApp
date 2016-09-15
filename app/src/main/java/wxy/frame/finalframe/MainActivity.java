@@ -7,6 +7,8 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -25,6 +27,7 @@ import java.util.List;
 
 import wxy.frame.finalframe.fragment.article.ArticleFragment;
 import wxy.frame.finalframe.fragment.joke.JokeFragment;
+import wxy.frame.finalframe.util.LogUtils;
 
 public class MainActivity extends BaseActivity {
 
@@ -35,6 +38,7 @@ public class MainActivity extends BaseActivity {
     FragmentTransaction ft;
     Fragment currentFragment;
     ActionBarDrawerToggle actionBarDrawerToggle;
+    AppBarLayout appBarLayout;
     ActionBar ab;
     Toolbar toolbar;
     private static final String PACKAGE_URL_SCHEME = "package:"; // 方案
@@ -46,6 +50,13 @@ public class MainActivity extends BaseActivity {
     @Override
     public void findIds() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
+//        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+//            @Override
+//            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+//                LogUtils.e("verticalOffset" + verticalOffset);
+//            }
+//        });
         setSupportActionBar(toolbar);
 
         ab = getSupportActionBar();

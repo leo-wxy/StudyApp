@@ -1,6 +1,9 @@
 package wxy.frame.finalframe;
 
+import android.app.Activity;
 import android.app.Application;
+
+import java.util.Set;
 
 /**
  * Created by xixi on 16/6/21.
@@ -10,6 +13,8 @@ import android.app.Application;
 public class MyApplication extends Application {
 
     private static volatile MyApplication instance;//volatile 多线程并发处理
+
+    private Set<Activity> allActivities;//activity堆栈
 
     /**
      * 单例模式

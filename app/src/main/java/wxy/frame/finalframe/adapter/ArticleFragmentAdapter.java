@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import wxy.frame.finalframe.fragment.article.ArticleListFragment;
@@ -15,6 +16,7 @@ import wxy.frame.finalframe.fragment.article.ArticleListFragment;
 public class ArticleFragmentAdapter extends FragmentPagerAdapter {
 
     private List<String> mTitles;
+    private LinkedHashMap<String, Fragment> fragmentMap = new LinkedHashMap<>();
 
     public ArticleFragmentAdapter(FragmentManager fm, List<String> mTitles) {
         super(fm);
@@ -23,7 +25,9 @@ public class ArticleFragmentAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return ArticleListFragment.newInstance(position);
+        if (!fragmentMap.containsKey(mTitles.get(position)))
+            fragmentMap.put(mTitles.get(position), ArticleListFragment.newInstance(position));
+        return fragmentMap.get(mTitles.get(position));
     }
 
     @Override

@@ -7,13 +7,19 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import wxy.frame.finalframe.R;
 import wxy.frame.finalframe.adapter.ArticleListAdapter;
 import wxy.frame.finalframe.adapter.BaseRecycleAdapter;
+import wxy.frame.finalframe.adapter.wrapper.HeaderAndFooterWrapper;
 import wxy.frame.finalframe.fragment.BaseFragment;
 import wxy.frame.finalframe.util.LogUtils;
 import wxy.frame.finalframe.widgets.AutoSwipeRefreshLayout;
@@ -44,6 +50,7 @@ public class ArticleListFragment extends BaseFragment implements SwipeRefreshLay
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         type = getArguments().getInt("type");//获取传递过来的类型值
+
     }
 
     @Override
@@ -84,12 +91,16 @@ public class ArticleListFragment extends BaseFragment implements SwipeRefreshLay
         }
 
         listAdapter = new ArticleListAdapter(mActivity, list);
-        rv_article.setAdapter(listAdapter);
+        HeaderAndFooterWrapper mWrapper = new HeaderAndFooterWrapper(listAdapter);
+        TextView tv = new TextView(mActivity);
+        tv.setText("哈哈");
+        mWrapper.addHeaderView(tv);
+
+        rv_article.setAdapter(mWrapper);
         rv_article.addOnScrollListener(new RecyclerView.OnScrollListener() {//上滑事件监听
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                LogUtils.e(dy);
             }
         });
         listAdapter.setOnItemClickListener(new BaseRecycleAdapter.OnItemClickListener() {
@@ -104,12 +115,7 @@ public class ArticleListFragment extends BaseFragment implements SwipeRefreshLay
     @Override
     protected void refreshView() {
         asr_article.setRefreshing(true);
-        (new Handler()).postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                asr_article.setRefreshing(false);
-            }
-        }, 3000);
+
     }
 
     @Override

@@ -8,7 +8,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
 import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -27,7 +26,6 @@ import java.util.List;
 
 import wxy.frame.finalframe.fragment.article.ArticleFragment;
 import wxy.frame.finalframe.fragment.joke.JokeFragment;
-import wxy.frame.finalframe.util.LogUtils;
 
 public class MainActivity extends BaseActivity {
 
@@ -202,7 +200,6 @@ public class MainActivity extends BaseActivity {
                         }
                     });
                 }
-
             }
         }
     }

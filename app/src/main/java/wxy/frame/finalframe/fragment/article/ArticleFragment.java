@@ -9,7 +9,9 @@ import java.util.List;
 
 import wxy.frame.finalframe.R;
 import wxy.frame.finalframe.adapter.ArticleFragmentAdapter;
+import wxy.frame.finalframe.bean.BuilderBean;
 import wxy.frame.finalframe.fragment.BaseFragment;
+import wxy.frame.finalframe.util.LogUtils;
 
 /**
  * Created by xixi on 16/6/27.
@@ -48,6 +50,10 @@ public class ArticleFragment extends BaseFragment {
         tabLayout.addTab(tabLayout.newTab().setText(titles.get(1)));
         tabLayout.addTab(tabLayout.newTab().setText(titles.get(2)));
         tabLayout.addTab(tabLayout.newTab().setText(titles.get(3)));
+
+        BuilderBean.Builder builder = new BuilderBean.Builder();
+        BuilderBean builderBean = builder.title("你好").text("hello").build();
+        LogUtils.e("buildbean" + builderBean.toString());
 
         fragmentAdapter =
                 new ArticleFragmentAdapter(mActivity.getSupportFragmentManager(), titles);

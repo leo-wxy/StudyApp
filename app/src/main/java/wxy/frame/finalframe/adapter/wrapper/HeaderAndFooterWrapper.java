@@ -3,6 +3,7 @@ package wxy.frame.finalframe.adapter.wrapper;
 import android.support.v4.util.SparseArrayCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -26,14 +27,25 @@ public class HeaderAndFooterWrapper<T> extends RecyclerView.Adapter<RecyclerView
         mInnerAdapter = adapter;
     }
 
+    /**
+     * 判断是否为头布局 位置
+     *
+     * @param position
+     * @return
+     */
     private boolean isHeaderViewPos(int position) {
         return position < getHeadersCount();
     }
 
+    /**
+     * 判断是否为尾布局 位置
+     *
+     * @param position
+     * @return
+     */
     private boolean isFooterViewPos(int position) {
         return position >= getHeadersCount() + getRealItemCount();
     }
-
 
     public void addHeaderView(View view) {
         mHeaderViews.put(mHeaderViews.size() + BASE_ITEM_TYPE_HEADER, view);
@@ -120,5 +132,18 @@ public class HeaderAndFooterWrapper<T> extends RecyclerView.Adapter<RecyclerView
         }
     }
 
-
+    @Override
+    public void onViewAttachedToWindow(RecyclerView.ViewHolder holder) {
+        mInnerAdapter.onViewAttachedToWindow(holder);
+        int position = holder.getLayoutPosition();
+        if (isHeaderViewPos(position) || isFooterViewPos(position)) {
+            ViewGroup.LayoutParams lp = holder.itemView.getLayoutParams();
+            if (lp != null
+                    && lp instanceof StaggeredGridLayoutManager.LayoutParams) {
+                StaggeredGridLayoutManager.LayoutParams p =
+                        (StaggeredGridLayoutManager.LayoutParams) lp;
+                p.setFullSpan(true);
+            }
+        }
+    }
 }

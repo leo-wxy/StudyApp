@@ -5,7 +5,6 @@ import android.widget.TextView;
 
 import wxy.frame.finalframe.R;
 import wxy.frame.finalframe.fragment.BaseFragment;
-import wxy.frame.finalframe.util.ShareUtil;
 import wxy.frame.finalframe.widgets.MyDragViewLayout;
 
 /**
@@ -36,9 +35,10 @@ public class JokeFragment extends BaseFragment {
         tv_set.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ShareUtil.shareText(mActivity, "你好", "测试");
+                System.err.println("ja");
             }
         });
+
     }
 
     @Override

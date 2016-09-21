@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -12,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import wxy.frame.finalframe.bean.ResultBean;
 import wxy.frame.finalframe.util.SnackBarUtils;
 
 /**
@@ -43,7 +45,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public abstract void initViews();
 
-    public void showSnack(View view,String tip) {
+    public void showSnack(View view, String tip) {
         SnackBarUtils.showSnack(view, tip);
     }
 
@@ -55,11 +57,25 @@ public abstract class BaseActivity extends AppCompatActivity {
         Intent intent = new Intent(this, cls);
         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+//        Intent aIntnne=(Intent)intent.clone();
         if (data != null) {
             intent.putExtra("data", (Parcelable) data);
             startActivity(intent);
         }
     }
+
+//获取parcel 数据实例
+//    public void getIntentData(Intent intent, String name) {
+//        byte[] datas = intent.getByteArrayExtra(name);
+//        if (datas != null) {
+//            Parcel in = Parcel.obtain();
+//            in.unmarshall(datas, 0, datas.length);
+//            in.setDataPosition(0);
+//            ResultBean resultBean = ResultBean.CREATOR.createFromParcel(in);
+//            in.recycle();
+//        }
+//    }
 
     /**
      * 申请权限检测

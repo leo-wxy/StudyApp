@@ -1,7 +1,6 @@
 package wxy.frame.finalframe.fragment.article;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,12 +10,9 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 import wxy.frame.finalframe.R;
+import wxy.frame.finalframe.activity.PermissionActivity;
 import wxy.frame.finalframe.adapter.ArticleListAdapter;
 import wxy.frame.finalframe.adapter.BaseRecycleAdapter;
 import wxy.frame.finalframe.adapter.wrapper.HeaderAndFooterWrapper;
@@ -107,7 +103,9 @@ public class ArticleListFragment extends BaseFragment implements SwipeRefreshLay
             @Override
             public void onClick(int i) {
                 //TODO 添加跳转至文章详情的功能 暂定跳转activity和bottomsheet
-                showSnack("跳转至文章" + i);//用以调试snachbar的功能
+                LogUtils.e("文章跳转");
+//                showSnack("跳转至文章" + i);//用以调试snachbar的功能
+                mActivity.startActivity(PermissionActivity.class);
             }
         });
     }

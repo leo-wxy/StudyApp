@@ -67,9 +67,9 @@ public class LogUtils {
         StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
 
         int index = 4;
-        String className = stackTrace[index].getFileName();
-        String methodName = stackTrace[index].getMethodName();
-        int lineNumber = stackTrace[index].getLineNumber();
+        String className = stackTrace[index].getFileName();//类名
+        String methodName = stackTrace[index].getMethodName();//方法名
+        int lineNumber = stackTrace[index].getLineNumber();//执行的行数
 
         String tag = (tagStr == null ? className : tagStr);
         methodName = methodName.substring(0, 1).toUpperCase() + methodName.substring(1);

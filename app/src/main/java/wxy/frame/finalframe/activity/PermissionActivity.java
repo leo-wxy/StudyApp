@@ -1,4 +1,7 @@
-package wxy.frame.finalframe;
+package wxy.frame.finalframe.activity;
+
+import wxy.frame.finalframe.BaseActivity;
+import wxy.frame.finalframe.R;
 
 /**
  * 权限申请界面 负责显示权限相关信息
@@ -6,8 +9,8 @@ package wxy.frame.finalframe;
  */
 
 public class PermissionActivity extends BaseActivity {
-    public PermissionActivity(int mLayoutId) {
-        super(mLayoutId);
+    public PermissionActivity() {
+        super(R.layout.act_per);
     }
 
     @Override

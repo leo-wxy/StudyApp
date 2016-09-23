@@ -6,45 +6,45 @@
             android:checkable="true"
             android:checked="true"
             android:icon="@drawable/ic_book"
-            android:title="文章"></item>
+            android:title="@string/left_article"/>
 
         <item
             android:id="@+id/nv_joke"
             android:checkable="true"
             android:icon="@drawable/ic_face"
-            android:title="笑话"></item>
+            android:title="@string/left_joke"/>
 
         <item
             android:id="@+id/nv_pic"
             android:checkable="true"
             android:icon="@drawable/ic_pic"
-            android:title="图片"></item>
+            android:title="@string/left_pic"/>
 
         <item
             android:id="@+id/nv_music"
             android:checkable="true"
             android:icon="@drawable/ic_album"
-            android:title="音乐"></item>
+            android:title="@string/left_music"/>
 
     </group>
 
-    <item android:title="设置">
+    <item android:title="@string/left_set">
         <menu>
             <item
                 android:id="@+id/nv_change"
                 android:checkable="true"
                 android:icon="@drawable/ic_swap"
-                android:title="切换主题"></item>
+                android:title="@string/left_night_theme"/>
             <item
                 android:id="@+id/nv_share"
                 android:checkable="true"
                 android:icon="@drawable/ic_share"
-                android:title="分享"></item>
+                android:title="@string/left_share"/>
             <item
                 android:id="@+id/nv_about"
                 android:checkable="true"
                 android:icon="@drawable/ic_about"
-                android:title="关于"></item>
+                android:title="@string/left_about"/>
 
         </menu>
     </item>

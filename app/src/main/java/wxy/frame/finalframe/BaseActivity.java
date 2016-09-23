@@ -5,16 +5,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 
-import wxy.frame.finalframe.bean.ResultBean;
 import wxy.frame.finalframe.util.SnackBarUtils;
+import wxy.frame.finalframe.view.swipewindow.SwipeWindowHelper;
 
 /**
  * Created by xixi on 16/6/29.
@@ -25,6 +25,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     private Context context;
     public LayoutInflater mLayoutInflater;
     public Bundle savedInstanceState;
+    private SwipeWindowHelper mSwipeWindowHelper;
+    private boolean mIsSupportSlide = true;
 
     public BaseActivity(int mLayoutId) {
         this.mLayoutId = mLayoutId;
@@ -53,6 +55,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         SnackBarUtils.showSnack(view, tip, action, onClickListener);
     }
 
+    public void startActivity(Class<?> cls) {
+        startActivity(cls, null);
+    }
+
     public void startActivity(Class<?> cls, Object data) {
         Intent intent = new Intent(this, cls);
         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
@@ -61,8 +67,8 @@ public abstract class BaseActivity extends AppCompatActivity {
 //        Intent aIntnne=(Intent)intent.clone();
         if (data != null) {
             intent.putExtra("data", (Parcelable) data);
-            startActivity(intent);
         }
+        startActivity(intent);
     }
 
 //获取parcel 数据实例
@@ -90,4 +96,22 @@ public abstract class BaseActivity extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (!supportSlideBack()) {
+            return super.dispatchTouchEvent(ev);
+        }
+        if (mSwipeWindowHelper == null) {
+            mSwipeWindowHelper = new SwipeWindowHelper(getWindow());
+        }
+        return mSwipeWindowHelper.processTouchEvent(ev) || super.dispatchTouchEvent(ev);
+    }
+
+    public void setSupportSlide(boolean supportSlide) {
+        this.mIsSupportSlide = supportSlide;
+    }
+
+    protected boolean supportSlideBack() {
+        return mIsSupportSlide;
+    }
 }

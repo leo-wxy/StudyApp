@@ -1,4 +1,4 @@
-package wxy.frame.finalframe;
+package wxy.frame.finalframe.activity;
 
 
 import android.Manifest;
@@ -24,6 +24,8 @@ import android.view.WindowManager;
 
 import java.util.List;
 
+import wxy.frame.finalframe.BaseActivity;
+import wxy.frame.finalframe.R;
 import wxy.frame.finalframe.fragment.article.ArticleFragment;
 import wxy.frame.finalframe.fragment.joke.JokeFragment;
 
@@ -49,18 +51,13 @@ public class MainActivity extends BaseActivity {
     public void findIds() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
-//        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-//            @Override
-//            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-//                LogUtils.e("verticalOffset" + verticalOffset);
-//            }
-//        });
+
         setSupportActionBar(toolbar);
+        setSupportSlide(false);
 
         ab = getSupportActionBar();
         ab.setDisplayShowTitleEnabled(true);
         ab.setDisplayHomeAsUpEnabled(false); // 决定左上角图标的右侧是否有向左的小箭头, true
-        // 有小箭头，并且图标可以点击
         ab.setDisplayShowHomeEnabled(false);
         ab.setTitle("文章");
 

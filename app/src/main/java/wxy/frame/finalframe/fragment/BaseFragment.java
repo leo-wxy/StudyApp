@@ -1,7 +1,9 @@
 package wxy.frame.finalframe.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -71,5 +73,21 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+    }
+
+    public void startActivity(Class<?> cls) {
+        startActivity(cls, null);
+    }
+
+    public void startActivity(Class<?> cls, Object data) {
+        Intent intent = new Intent(mActivity, cls);
+        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+//        Intent aIntnne=(Intent)intent.clone();
+        if (data != null) {
+            intent.putExtra("data", (Parcelable) data);
+        }
+        mActivity.startActivity(intent);
     }
 }

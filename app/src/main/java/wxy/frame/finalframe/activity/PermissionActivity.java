@@ -1,5 +1,8 @@
 package wxy.frame.finalframe.activity;
 
+import android.view.View;
+import android.widget.TextView;
+
 import wxy.frame.finalframe.BaseActivity;
 import wxy.frame.finalframe.R;
 
@@ -9,13 +12,24 @@ import wxy.frame.finalframe.R;
  */
 
 public class PermissionActivity extends BaseActivity {
+
     public PermissionActivity() {
         super(R.layout.act_per);
     }
 
     @Override
     public void findIds() {
+        TextView tv = (TextView) findViewById(R.id.tv);
+        tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                click();
+            }
+        });
+    }
 
+    public void click() {
+        finishAll();
     }
 
     @Override

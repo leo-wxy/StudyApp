@@ -12,8 +12,9 @@ import android.view.View;
 
 public class MyApplication extends MultiDexApplication {
 
-    private static volatile MyApplication instance;//volatile 多线程并发处理
-    private ActivityLifeCycleHelper mActivityLifeCycleHelper;
+    public static final String TAG = "MyApplication";
+    private static MyApplication instance;//volatile 多线程并发处理
+    private ActivityLifeCycleHelper mActivityLifeCycleHelper = null;
 
     /**
      * 单例模式
@@ -21,25 +22,22 @@ public class MyApplication extends MultiDexApplication {
      * @return
      */
     public static MyApplication getInstance() {
-        if (instance == null) {
-            synchronized (MyApplication.class) {
-                if (instance == null) {
-                    instance = new MyApplication();
-                }
-            }
-        }
+
         return instance;
     }
 
-    public ActivityLifeCycleHelper getActivityLifecycleHelper() {
-        return mActivityLifeCycleHelper;
-    }
 
     @Override
     public void onCreate() {
         super.onCreate();
         MultiDex.install(this);
-        registerActivityLifecycleCallbacks(mActivityLifeCycleHelper = new ActivityLifeCycleHelper());
+        instance = this;
+        this.mActivityLifeCycleHelper = new ActivityLifeCycleHelper();
+        registerActivityLifecycleCallbacks(mActivityLifeCycleHelper);
+    }
+
+    public ActivityLifeCycleHelper getActivityLifecycleHelper() {
+        return mActivityLifeCycleHelper;
     }
 
     /**
@@ -57,14 +55,15 @@ public class MyApplication extends MultiDexApplication {
     @Override
     public void onTerminate() {
         super.onTerminate();
+        unregisterActivityLifecycleCallbacks(mActivityLifeCycleHelper);
     }
 
     public void onSlideBack(boolean isReset, float distance) {
-        if(mActivityLifeCycleHelper != null) {
+        if (mActivityLifeCycleHelper != null) {
             Activity lastActivity = mActivityLifeCycleHelper.getPreActivity();
-            if(lastActivity != null) {
+            if (lastActivity != null) {
                 View contentView = lastActivity.findViewById(android.R.id.content);
-                if(isReset) {
+                if (isReset) {
                     contentView.setX(contentView.getLeft());
                 } else {
                     final int width = getResources().getDisplayMetrics().widthPixels;
@@ -73,4 +72,6 @@ public class MyApplication extends MultiDexApplication {
             }
         }
     }
+
+
 }

@@ -5,6 +5,8 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 
+import wxy.frame.finalframe.util.LogUtils;
+
 public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
     public static final float ALPHA_FULL = 1.0f;
 
@@ -68,7 +70,7 @@ public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
     }
 
     /**
-     * 在拖动状态
+     * 拖动结束
      *
      * @param viewHolder
      * @param i
@@ -76,15 +78,16 @@ public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int i) {
         // Notify the adapter of the dismissal
+        LogUtils.e("swipe" + i + " " + viewHolder.getAdapterPosition());
         mAdapter.onItemDismiss(viewHolder.getAdapterPosition());
     }
 
+
     /**
-     *
      * @param c
      * @param recyclerView
      * @param viewHolder
-     * @param dX 向左为负  向右为正
+     * @param dX                向左为负  向右为正
      * @param dY
      * @param actionState
      * @param isCurrentlyActive
@@ -93,10 +96,11 @@ public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
     public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
         if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
 
-            // Fade out the view as it is swiped out of the parent's bounds
+            // Fade out the view as it is swiped out of the parent's bounds  手势滑动时触发
             final float alpha = ALPHA_FULL - Math.abs(dX) / (float) viewHolder.itemView.getWidth();
             viewHolder.itemView.setAlpha(alpha);
             viewHolder.itemView.setTranslationX(dX);
+
         } else {
             super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
         }
@@ -126,6 +130,10 @@ public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
             // Tell the view holder it's time to restore the idle state
             ItemTouchHelperViewHolder itemViewHolder = (ItemTouchHelperViewHolder) viewHolder;
             itemViewHolder.onItemClear();
+        } else {
+            LogUtils.e("clearview");
         }
     }
+
+
 }

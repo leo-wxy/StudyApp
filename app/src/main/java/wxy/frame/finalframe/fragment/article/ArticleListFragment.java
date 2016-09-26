@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 import android.widget.TextView;
 
@@ -15,6 +16,8 @@ import wxy.frame.finalframe.R;
 import wxy.frame.finalframe.activity.PermissionActivity;
 import wxy.frame.finalframe.adapter.ArticleListAdapter;
 import wxy.frame.finalframe.adapter.BaseRecycleAdapter;
+import wxy.frame.finalframe.adapter.click.OnRecycleItemClickListener;
+import wxy.frame.finalframe.adapter.helper.SimpleItemTouchHelperCallback;
 import wxy.frame.finalframe.adapter.wrapper.HeaderAndFooterWrapper;
 import wxy.frame.finalframe.fragment.BaseFragment;
 import wxy.frame.finalframe.util.LogUtils;
@@ -62,7 +65,7 @@ public class ArticleListFragment extends BaseFragment implements SwipeRefreshLay
         rv_article.setLayoutManager(new LinearLayoutManager(mActivity));
         asr_article.setColorSchemeResources(R.color.colorAccent);
         asr_article.setOnRefreshListener(this);
-        List<Integer> list = new ArrayList<>();
+        final List<Integer> list = new ArrayList<>();
         switch (type) {
             case 0:
                 for (int i = 0; i < 3; i++) {
@@ -90,24 +93,39 @@ public class ArticleListFragment extends BaseFragment implements SwipeRefreshLay
         HeaderAndFooterWrapper mWrapper = new HeaderAndFooterWrapper(listAdapter);
         TextView tv = new TextView(mActivity);
         tv.setText("哈哈");
-        mWrapper.addHeaderView(tv);
+        mWrapper.addFootView(tv);
 
-        rv_article.setAdapter(mWrapper);
-        rv_article.addOnScrollListener(new RecyclerView.OnScrollListener() {//上滑事件监听
+        rv_article.setAdapter(listAdapter);
+
+        listAdapter.setOnDragListener(new BaseRecycleAdapter.OnDragListener() {
             @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
+            public void onItemMove(int fromPosition, int toPosition) {
+//                LogUtils.e("item拖拽交换位置");
+//                Collections.swap(list, fromPosition, toPosition);
+//                listAdapter.notifyItemMoved(fromPosition, toPosition);
+            }
+
+            @Override
+            public void onItemDismiss(int position) {
+                LogUtils.e("");
+                list.remove(position);
+                listAdapter.notifyItemRemoved(position);
+                listAdapter.notifyItemRangeChanged(position, list.size() - position);
             }
         });
-        listAdapter.setOnItemClickListener(new BaseRecycleAdapter.OnItemClickListener() {
+
+        ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(listAdapter);
+        ItemTouchHelper mItemTouchHelper = new ItemTouchHelper(callback);
+        mItemTouchHelper.attachToRecyclerView(rv_article);
+
+        rv_article.addOnItemTouchListener(new OnRecycleItemClickListener(rv_article) {
             @Override
-            public void onClick(int i) {
-                //TODO 添加跳转至文章详情的功能 暂定跳转activity和bottomsheet
-                LogUtils.e("文章跳转");
-//                showSnack("跳转至文章" + i);//用以调试snachbar的功能
-                mActivity.startActivity(PermissionActivity.class);
+            public void onItemClick(int position) {
+                LogUtils.e("position" + position);
+                startActivity(PermissionActivity.class);
             }
         });
+
     }
 
     @Override

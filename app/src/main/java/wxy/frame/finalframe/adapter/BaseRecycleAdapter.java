@@ -9,27 +9,30 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
+import wxy.frame.finalframe.adapter.helper.ItemTouchHelperAdapter;
+
 /**
  * Created by xixi on 16/6/27.
  */
 
 /**
- * RecycleView的基本继承adapter
+ * RecycleView的基本继承adapter（包含 拖拽,滑动事件）
  *
  * @param <T>
  * @param <VH>
  */
-public abstract class BaseRecycleAdapter<T, VH extends BaseRecycleAdapter.SparseArrayViewHolder> extends RecyclerView.Adapter<VH> {
+public abstract class BaseRecycleAdapter<T, VH extends BaseRecycleAdapter.SparseArrayViewHolder> extends RecyclerView.Adapter<VH>
+        implements ItemTouchHelperAdapter {
 
     protected List<T> mList;// 列表List
     protected LayoutInflater mInflater;// 布局管理
     protected OnCustomListener listener;//单独点击事件
+    protected OnDragListener onDragListener;//拖动事件处理
     public Context context;
 
     /**
      * click listener
      */
-    protected OnItemClickListener mOnItemClickListener;
 
     public BaseRecycleAdapter(Context context, List<T> mList) {
         this.mList = mList;
@@ -50,21 +53,10 @@ public abstract class BaseRecycleAdapter<T, VH extends BaseRecycleAdapter.Sparse
     public void onBindViewHolder(VH vh, int position) {
         final T item = getItem(position);
         bindDataToItemView(vh, item);
-        bindItemViewClickListener(vh, position);
     }
 
     protected abstract void bindDataToItemView(VH vh, T item);
 
-    protected final void bindItemViewClickListener(VH vh, final int i) {
-        if (mOnItemClickListener != null) {
-            vh.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    mOnItemClickListener.onClick( i);
-                }
-            });
-        }
-    }
 
     protected T getItem(int position) {
         return mList.get(position);
@@ -106,16 +98,25 @@ public abstract class BaseRecycleAdapter<T, VH extends BaseRecycleAdapter.Sparse
         void onCustomerListener(View v, int position);
     }
 
-    /**
-     * 设置item的点击事件
-     *
-     * @param onItemClickListener
-     */
-    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
-        mOnItemClickListener = onItemClickListener;
+    @Override
+    public boolean onItemMove(int fromPosition, int toPosition) {
+        onDragListener.onItemMove(fromPosition, toPosition);
+        return true;
     }
 
-    public interface OnItemClickListener {
-        void onClick( int i);
+    @Override
+    public void onItemDismiss(int position) {
+        onDragListener.onItemDismiss(position);
     }
+
+    public void setOnDragListener(OnDragListener onDragListener) {
+        this.onDragListener = onDragListener;
+    }
+
+    public interface OnDragListener {
+        void onItemMove(int fromPosition, int toPosition);
+
+        void onItemDismiss(int position);
+    }
+
 }

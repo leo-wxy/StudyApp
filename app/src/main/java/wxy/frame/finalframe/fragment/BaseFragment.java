@@ -90,4 +90,10 @@ public abstract class BaseFragment extends Fragment {
         }
         mActivity.startActivity(intent);
     }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mActivity = null;
+    }
 }

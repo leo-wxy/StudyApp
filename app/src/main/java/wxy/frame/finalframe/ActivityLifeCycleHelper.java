@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
 
+import java.util.Iterator;
 import java.util.Stack;
 
 /**
@@ -13,10 +14,22 @@ import java.util.Stack;
 
 public class ActivityLifeCycleHelper implements Application.ActivityLifecycleCallbacks {
 
-    private static Stack<Activity> activityStack;//activity堆栈
+    public static Stack<Activity> activityStack;//activity堆栈
+    public static ActivityLifeCycleHelper instance;
 
     public ActivityLifeCycleHelper() {
         activityStack = new Stack<>();
+    }
+
+    public static ActivityLifeCycleHelper getInstance() {
+        if (instance == null) {
+            synchronized (ActivityLifeCycleHelper.class) {
+                if (instance == null) {
+                    instance = new ActivityLifeCycleHelper();
+                }
+            }
+        }
+        return instance;
     }
 
     @Override
@@ -82,7 +95,10 @@ public class ActivityLifeCycleHelper implements Application.ActivityLifecycleCal
      * @return
      */
     public Activity getCurrentActivity() {
-        return activityStack.lastElement();
+        Activity activity = null;
+        if (!activityStack.empty())
+            activity = activityStack.lastElement();
+        return activity;
     }
 
     /**
@@ -115,7 +131,6 @@ public class ActivityLifeCycleHelper implements Application.ActivityLifecycleCal
         if (activity != null) {
             activityStack.remove(activity);
             activity.finish();
-            activity = null;
         }
     }
 
@@ -123,14 +138,14 @@ public class ActivityLifeCycleHelper implements Application.ActivityLifecycleCal
      * 关闭所有activity
      */
     public void finishAllActivity() {
-        for (int i = 0; i < activityStack.size(); i++) {
-            if (null != activityStack.get(i)) {
-                Activity activity = activityStack.get(i);
-                if (!activity.isFinishing())
-                    activity.finish();
+        Iterator i = activityStack.iterator();
+        while (i.hasNext()) {
+            Activity activity = getCurrentActivity();
+            if (activity == null) {
+                return;
             }
+            activity.finish();
         }
-        activityStack.clear();
     }
 
     /**

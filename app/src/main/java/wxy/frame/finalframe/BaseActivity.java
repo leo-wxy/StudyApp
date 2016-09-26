@@ -1,6 +1,7 @@
 package wxy.frame.finalframe;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -113,5 +114,19 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected boolean supportSlideBack() {
         return mIsSupportSlide;
+    }
+
+    @Override
+    public void finish() {
+        MyApplication.getInstance().getActivityLifecycleHelper().removeActivity(this);
+        super.finish();
+    }
+
+    public void finishAll() {
+        MyApplication.getInstance().getActivityLifecycleHelper().finishAllActivity();
+    }
+
+    public void finishAllExcept(Activity activity) {
+        MyApplication.getInstance().getActivityLifecycleHelper().finishAllWithoutActivity(activity);
     }
 }

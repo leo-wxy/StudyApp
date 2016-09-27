@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import wxy.frame.finalframe.R;
@@ -90,27 +91,28 @@ public class ArticleListFragment extends BaseFragment implements SwipeRefreshLay
         }
 
         listAdapter = new ArticleListAdapter(mActivity, list);
-        HeaderAndFooterWrapper mWrapper = new HeaderAndFooterWrapper(listAdapter);
+        final HeaderAndFooterWrapper mWrapper = new HeaderAndFooterWrapper(listAdapter);
         TextView tv = new TextView(mActivity);
         tv.setText("哈哈");
-        mWrapper.addFootView(tv);
+        mWrapper.addHeaderView(tv);
 
-        rv_article.setAdapter(listAdapter);
+        rv_article.setAdapter(mWrapper);
 
         listAdapter.setOnDragListener(new BaseRecycleAdapter.OnDragListener() {
             @Override
             public void onItemMove(int fromPosition, int toPosition) {
 //                LogUtils.e("item拖拽交换位置");
-//                Collections.swap(list, fromPosition, toPosition);
-//                listAdapter.notifyItemMoved(fromPosition, toPosition);
+
+                Collections.swap(list, fromPosition - 1, toPosition - 1);
+                mWrapper.notifyItemMoved(fromPosition, toPosition);
             }
 
             @Override
             public void onItemDismiss(int position) {
                 LogUtils.e("");
                 list.remove(position);
-                listAdapter.notifyItemRemoved(position);
-                listAdapter.notifyItemRangeChanged(position, list.size() - position);
+                mWrapper.notifyItemRemoved(position);
+                mWrapper.notifyItemRangeChanged(position, list.size() - position);
             }
         });
 

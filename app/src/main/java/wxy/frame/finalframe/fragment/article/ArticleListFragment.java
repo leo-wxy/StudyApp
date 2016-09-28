@@ -14,7 +14,7 @@ import java.util.Collections;
 import java.util.List;
 
 import wxy.frame.finalframe.R;
-import wxy.frame.finalframe.activity.PermissionActivity;
+import wxy.frame.finalframe.activity.ArticleDetailActivity;
 import wxy.frame.finalframe.adapter.ArticleListAdapter;
 import wxy.frame.finalframe.adapter.BaseRecycleAdapter;
 import wxy.frame.finalframe.adapter.click.OnRecycleItemClickListener;
@@ -96,21 +96,19 @@ public class ArticleListFragment extends BaseFragment implements SwipeRefreshLay
         tv.setText("哈哈");
         mWrapper.addHeaderView(tv);
 
+        final int headCount = mWrapper.getHeadersCount();
         rv_article.setAdapter(mWrapper);
 
         listAdapter.setOnDragListener(new BaseRecycleAdapter.OnDragListener() {
             @Override
             public void onItemMove(int fromPosition, int toPosition) {
-//                LogUtils.e("item拖拽交换位置");
-
-                Collections.swap(list, fromPosition - 1, toPosition - 1);
+                Collections.swap(list, fromPosition - headCount, toPosition - headCount);
                 mWrapper.notifyItemMoved(fromPosition, toPosition);
             }
 
             @Override
             public void onItemDismiss(int position) {
-                LogUtils.e("");
-                list.remove(position);
+                list.remove(position - headCount);
                 mWrapper.notifyItemRemoved(position);
                 mWrapper.notifyItemRangeChanged(position, list.size() - position);
             }
@@ -124,7 +122,7 @@ public class ArticleListFragment extends BaseFragment implements SwipeRefreshLay
             @Override
             public void onItemClick(int position) {
                 LogUtils.e("position" + position);
-                startActivity(PermissionActivity.class);
+                startActivity(ArticleDetailActivity.class);
             }
         });
 

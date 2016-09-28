@@ -10,7 +10,6 @@ import java.util.List;
 
 import wxy.frame.finalframe.R;
 import wxy.frame.finalframe.adapter.helper.ItemTouchHelperViewHolder;
-import wxy.frame.finalframe.util.LogUtils;
 
 /**
  * Created by xixi on 16/6/29.
@@ -21,13 +20,11 @@ public class ArticleListAdapter extends BaseRecycleAdapter<Integer, ArticleListA
 
     public ArticleListAdapter(Context context, List mList) {
         super(context, mList);
-        LogUtils.e("adapter初始化");
         list.addAll(mList);
     }
 
     @Override
     protected void bindDataToItemView(MViewHolder mViewHolder, Integer item) {
-        LogUtils.e("又来了");
         mViewHolder.tv_title.setText("nihao " + item);
     }
 

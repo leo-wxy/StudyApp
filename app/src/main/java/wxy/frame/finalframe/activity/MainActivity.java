@@ -51,6 +51,12 @@ public class MainActivity extends BaseActivity {
     public void findIds() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
+//        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+//            @Override
+//            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+//                LogUtils.e("verticalOffset" + verticalOffset);
+//            }
+//        });
 
         setSupportActionBar(toolbar);
         setSupportSlide(false);

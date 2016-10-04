@@ -22,6 +22,10 @@ public abstract class BaseFragment extends Fragment {
     protected BaseActivity mActivity;
     protected View view;
 
+    protected boolean isVisible;//是否可见
+    private boolean isPrepared;
+    private boolean isFirst = true;
+
     public BaseFragment(int mLayoutId) {
         this.mLayoutId = mLayoutId;
     }
@@ -43,8 +47,9 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        findView(getView());
-        refreshView();
+        isPrepared=true;
+//        findView(getView());
+//        refreshView();
     }
 
     /**
@@ -95,5 +100,41 @@ public abstract class BaseFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mActivity = null;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(getUserVisibleHint()){
+            setUserVisibleHint(true);
+        }
+    }
+
+    /**
+     * 获取fragment是否加载
+     * @param isVisibleToUser
+     */
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(getUserVisibleHint()){
+            isVisible = true;
+            lazyLoad();
+        }else{
+            isVisible = false;
+//            onInvisible();
+        }
+    }
+
+    /**
+     * 懒加载
+     */
+    protected void lazyLoad(){
+        if(!isPrepared || !isVisible || !isFirst){
+            return;
+        }
+        findView(getView());
+        refreshView();
+        isFirst = false;
     }
 }

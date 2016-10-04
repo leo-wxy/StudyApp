@@ -1,6 +1,7 @@
 package wxy.frame.finalframe.fragment.article;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -130,7 +131,13 @@ public class ArticleListFragment extends BaseFragment implements SwipeRefreshLay
 
     @Override
     protected void refreshView() {
-        asr_article.setRefreshing(true);
+        Handler mHandler = new Handler();
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                asr_article.setRefreshing(false);
+            }
+        }, 3000);
 
     }
 

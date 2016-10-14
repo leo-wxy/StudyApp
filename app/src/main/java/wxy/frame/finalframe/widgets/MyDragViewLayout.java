@@ -207,7 +207,6 @@ public class MyDragViewLayout extends ViewGroup {
         mContentView.layout(0, mMenuView.getHeight(),
                 mContentView.getMeasuredWidth(),
                 this.getMeasuredHeight());
-//        mContentView.animate().y(-1000).setDuration(500).start();
     }
 
 }

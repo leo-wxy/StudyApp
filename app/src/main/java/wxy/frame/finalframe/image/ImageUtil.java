@@ -26,6 +26,7 @@ import wxy.frame.finalframe.util.StringUtils;
 
 /**
  * 图片工具类 包括网络以及本地图片加载  图片裁剪  图片保存等图片相关功能
+ * TODO 需要添加写入SD卡权限申请
  */
 public class ImageUtil {
     /**

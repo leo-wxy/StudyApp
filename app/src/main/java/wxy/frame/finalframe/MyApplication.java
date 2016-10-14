@@ -22,7 +22,6 @@ public class MyApplication extends MultiDexApplication {
      * @return
      */
     public static MyApplication getInstance() {
-
         return instance;
     }
 
@@ -33,6 +32,7 @@ public class MyApplication extends MultiDexApplication {
         MultiDex.install(this);
         instance = this;
         this.mActivityLifeCycleHelper = new ActivityLifeCycleHelper();
+        CrashHandler.getInstance().init(getApplicationContext());
         registerActivityLifecycleCallbacks(mActivityLifeCycleHelper);
     }
 

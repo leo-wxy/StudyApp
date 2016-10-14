@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 23
+    compileSdkVersion 24
     buildToolsVersion "23.0.3"
     defaultConfig {
         applicationId "wxy.frame.finalframe"
@@ -14,7 +14,12 @@ android {
     }
     buildTypes {
         release {
+            //混淆
             minifyEnabled false
+            //优化apk大小
+            zipAlignEnabled true
+            //移除无用resource文件
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -22,16 +27,16 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:23.4.0'
+    compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha8'
     testCompile 'junit:junit:4.12'
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
     androidTestCompile 'com.android.support.test:runner:0.5'
-    androidTestCompile 'com.android.support:support-annotations:23.4.0'
-    compile 'com.android.support:design:23.4.0'
+    androidTestCompile 'com.android.support:support-annotations:24.2.1'
+    compile 'com.android.support:design:24.2.1'
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.google.code.gson:gson:2.7'
-    compile 'com.android.support:cardview-v7:23.4.0'
+    compile 'com.android.support:cardview-v7:24.2.1'
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.android.support:multidex:1.0.1'
 }

@@ -22,7 +22,6 @@ import wxy.frame.finalframe.adapter.click.OnRecycleItemClickListener;
 import wxy.frame.finalframe.adapter.helper.SimpleItemTouchHelperCallback;
 import wxy.frame.finalframe.adapter.wrapper.HeaderAndFooterWrapper;
 import wxy.frame.finalframe.fragment.BaseFragment;
-import wxy.frame.finalframe.util.LogUtils;
 import wxy.frame.finalframe.widgets.AutoSwipeRefreshLayout;
 
 /**
@@ -51,7 +50,6 @@ public class ArticleListFragment extends BaseFragment implements SwipeRefreshLay
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         type = getArguments().getInt("type");//获取传递过来的类型值
-
     }
 
     @Override
@@ -61,10 +59,10 @@ public class ArticleListFragment extends BaseFragment implements SwipeRefreshLay
 
     @Override
     protected void findView(View v) {
-        System.err.println("hahahahahah");
         asr_article = (AutoSwipeRefreshLayout) v.findViewById(R.id.asr_article);
         rv_article = (RecyclerView) v.findViewById(R.id.rv_article);
         rv_article.setLayoutManager(new LinearLayoutManager(mActivity));
+        asr_article.autoRefresh();
         asr_article.setColorSchemeResources(R.color.colorAccent);
         asr_article.setOnRefreshListener(this);
         final List<Integer> list = new ArrayList<>();
@@ -122,7 +120,6 @@ public class ArticleListFragment extends BaseFragment implements SwipeRefreshLay
         rv_article.addOnItemTouchListener(new OnRecycleItemClickListener(rv_article) {
             @Override
             public void onItemClick(int position) {
-                LogUtils.e("position" + position);
                 startActivity(ArticleDetailActivity.class);
             }
         });
@@ -138,7 +135,6 @@ public class ArticleListFragment extends BaseFragment implements SwipeRefreshLay
                 asr_article.setRefreshing(false);
             }
         }, 3000);
-
     }
 
     @Override

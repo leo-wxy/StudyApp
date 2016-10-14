@@ -48,8 +48,6 @@ public abstract class BaseFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         isPrepared=true;
-//        findView(getView());
-//        refreshView();
     }
 
     /**

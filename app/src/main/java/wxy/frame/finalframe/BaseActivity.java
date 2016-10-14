@@ -14,6 +14,8 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 
+import java.util.List;
+
 import wxy.frame.finalframe.util.SnackBarUtils;
 import wxy.frame.finalframe.view.swipewindow.SwipeWindowHelper;
 
@@ -69,7 +71,14 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (data != null) {
             intent.putExtra("data", (Parcelable) data);
         }
-        startActivity(intent);
+        //判断是否有可以跳转使用的Activity，以免发生崩溃
+        PackageManager packageManager = getPackageManager();
+        List activities = packageManager.queryIntentActivities(intent,
+                PackageManager.MATCH_DEFAULT_ONLY);
+        boolean isIntentSafe = activities.size() > 0;
+
+        if (isIntentSafe)
+            startActivity(intent);
     }
 
 //获取parcel 数据实例

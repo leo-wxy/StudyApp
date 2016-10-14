@@ -8,7 +8,6 @@ import wxy.frame.finalframe.BaseActivity;
 import wxy.frame.finalframe.R;
 
 /**
- * 权限申请界面 负责显示权限相关信息
  * Created by xixi on 16/7/7.
  */
 
@@ -34,12 +33,23 @@ public class ArticleDetailActivity extends BaseActivity {
         });
 
         coll_tb = (CollapsingToolbarLayout) findViewById(R.id.coll_tb);
-        coll_tb.setTitle("文章详情");
+        coll_tb.setTitle("文章");
 
     }
 
     @Override
     public void initViews() {
+
+        /**
+         拓展  正确删除list中元素的方法
+         Iterator<Integer> iterator = list.iterator();
+         while(iterator.hasNext()){
+         int i = iterator.next();
+         if(i == 1){
+         iterator.remove();
+         }
+         }
+         */
 
     }
 }

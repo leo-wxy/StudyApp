@@ -1,2 +1,6 @@
 1.使用MVP模式构造
 2.日历 天气 文章
+3.view的点击分发机制
+   例：button的点击事件：activity.dispatchTouchEvent-->layout.dispatchTouchEvent-->
+    layout.onInterceptTouchEvent-->button.dispatchTouchEvent-->button.onTouch-->
+    button.onTouchEvent-->button.onClick

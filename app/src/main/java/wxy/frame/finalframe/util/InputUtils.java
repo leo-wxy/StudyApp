@@ -4,10 +4,12 @@ package wxy.frame.finalframe.util;
  * Created by xixi on 16/7/15.
  */
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
@@ -105,6 +107,27 @@ public class InputUtils {
                     }
                 }
         );
+    }
+
+    /**
+     * 点击空白处收起键盘
+     *
+     * @param context
+     */
+    public static void setTouchListener(final Activity context) {
+        context.getWindow().getDecorView().setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                InputMethodManager imm = (InputMethodManager) context
+                        .getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (null != context.getCurrentFocus()) {
+                    imm.hideSoftInputFromWindow(context.getCurrentFocus().getWindowToken(), 0);
+                } else {
+                    imm.hideSoftInputFromWindow((context.findViewById(android.R.id.content)).getWindowToken(), 0);
+                }
+                return false;
+            }
+        });
     }
 
 

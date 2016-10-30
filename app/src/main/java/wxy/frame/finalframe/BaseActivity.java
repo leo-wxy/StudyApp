@@ -44,6 +44,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         this.savedInstanceState = savedInstanceState;
         findIds();
         initViews();
+
     }
 
     public abstract void findIds();
@@ -79,6 +80,8 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         if (isIntentSafe)
             startActivity(intent);
+        else
+            throw new NullPointerException("No Activity Can Start!");
     }
 
 //获取parcel 数据实例

@@ -180,6 +180,7 @@ public class MyDragViewLayout extends ViewGroup {
         super.onFinishInflate();
         mMenuView = getChildAt(0);
         mContentView = getChildAt(1);
+
     }
 
     @Override

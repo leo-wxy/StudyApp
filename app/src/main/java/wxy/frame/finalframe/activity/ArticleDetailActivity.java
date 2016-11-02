@@ -9,17 +9,19 @@ import wxy.frame.finalframe.BaseActivity;
 import wxy.frame.finalframe.R;
 import wxy.frame.finalframe.util.LogUtils;
 import wxy.frame.finalframe.view.MyButton;
+import wxy.frame.finalframe.view.MyLayout;
 
 /**
  * Created by xixi on 16/7/7.
  */
-
+//@BindView(R.layout.act_article_detail)
 public class ArticleDetailActivity extends BaseActivity {
 
     Toolbar toolbar;
     CollapsingToolbarLayout coll_tb;
     public static final String TAG = "ArticleDetailActivity";
     MyButton mbt;
+    MyLayout mll;
 
     public ArticleDetailActivity() {
         super(R.layout.act_article_detail);
@@ -60,6 +62,31 @@ public class ArticleDetailActivity extends BaseActivity {
                         break;
                     case MotionEvent.ACTION_UP:
                         LogUtils.e("MyButton", "onTouch--ACTION_UP");
+                        break;
+                }
+                return false;
+            }
+        });
+
+        mll= (MyLayout) findViewById(R.id.mll);
+        mll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LogUtils.e("MyLayout", "onClick");
+            }
+        });
+        mll.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        LogUtils.e("MyLayout", "onTouch--ACTION_DOWN");
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        LogUtils.e("MyLayout", "onTouch--ACTION_MOVE");
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        LogUtils.e("MyLayout", "onTouch--ACTION_UP");
                         break;
                 }
                 return false;

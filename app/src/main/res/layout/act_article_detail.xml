@@ -51,25 +51,28 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v4.widget.NestedScrollView
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         >
 
         <wxy.frame.finalframe.view.MyLayout
+            android:id="@+id/mll"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:orientation="vertical">
+            android:layout_height="500dp"
+            android:orientation="vertical"
+            android:background="#00ffff">
 
             <wxy.frame.finalframe.view.MyButton
                 android:id="@+id/mbt"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:layout_margin="100dp"
                 android:text="测试触摸"/>
         </wxy.frame.finalframe.view.MyLayout>
 
-    </android.support.v4.widget.NestedScrollView>
+    </ScrollView>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_share"

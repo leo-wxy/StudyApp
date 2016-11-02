@@ -49,6 +49,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void findIds() {
+
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
 

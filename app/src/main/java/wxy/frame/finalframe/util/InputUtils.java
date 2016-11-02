@@ -8,13 +8,18 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import java.lang.reflect.Method;
 
 /**
  * 设计软键盘控制的方法
@@ -133,5 +138,35 @@ public class InputUtils {
 
     public interface SearchActionListener {
         void searchAction();
+    }
+
+    /**
+     * 判断是否存在虚拟键盘
+     *
+     * @param context
+     * @return
+     */
+    public static boolean isHaveVirtualKey(Activity context) {
+        WindowManager manager = context.getWindowManager();
+        DisplayMetrics outMetrics = new DisplayMetrics();
+        manager.getDefaultDisplay().getMetrics(outMetrics);
+        int totalHeight = outMetrics.heightPixels;
+
+        int dpi = 0;
+        Display display = manager.getDefaultDisplay();
+        DisplayMetrics dm = new DisplayMetrics();
+        @SuppressWarnings("rawtypes")
+        Class c;
+        try {
+            c = Class.forName("android.view.Display");
+            @SuppressWarnings("unchecked")
+            Method method = c.getMethod("getRealMetrics", DisplayMetrics.class);
+            method.invoke(display, dm);
+            dpi = dm.heightPixels;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return totalHeight - dpi > 0;
     }
 }

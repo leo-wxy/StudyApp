@@ -68,7 +68,7 @@ public class ArticleDetailActivity extends BaseActivity {
             }
         });
 
-        mll= (MyLayout) findViewById(R.id.mll);
+        mll = (MyLayout) findViewById(R.id.mll);
         mll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,6 +95,14 @@ public class ArticleDetailActivity extends BaseActivity {
 
     }
 
+    /**
+     * 发生触屏事件时会触发
+     */
+    @Override
+    public void onUserInteraction() {
+        LogUtils.e("user+onUserInteraction()");
+        super.onUserInteraction();
+    }
 
     /**
      * 优先执行，return true后事件被消费，不会向下传递

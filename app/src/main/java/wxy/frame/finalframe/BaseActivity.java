@@ -72,6 +72,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (data != null) {
             intent.putExtra("data", (Parcelable) data);
         }
+
         //判断是否有可以跳转使用的Activity，以免发生崩溃
         PackageManager packageManager = getPackageManager();
         List activities = packageManager.queryIntentActivities(intent,

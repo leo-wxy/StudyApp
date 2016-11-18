@@ -7,7 +7,7 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 
 import wxy.frame.finalframe.util.LogUtils;
 
-public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
+public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback{
     public static final float ALPHA_FULL = 1.0f;
 
     private final ItemTouchHelperAdapter mAdapter;
@@ -77,6 +77,7 @@ public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
      */
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int i) {
+        LogUtils.e("滑动距离" + i);
         // Notify the adapter of the dismissal
         mAdapter.onItemDismiss(viewHolder.getAdapterPosition());
     }

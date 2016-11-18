@@ -13,6 +13,9 @@ public interface AppConfig {
     //---------------是否打印日志-----------------
     public static final boolean SHOW_LOG = true;
 
+    //----------------SharedPreferences存储-----------
+    public static final String SP_NAME="final";
+
     // --------------应用缓存文件基本信息-----------------------
     /**
      * 程序在手机SDK中的主缓存目录.

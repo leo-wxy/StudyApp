@@ -21,6 +21,7 @@ import wxy.frame.finalframe.adapter.BaseRecycleAdapter;
 import wxy.frame.finalframe.adapter.click.OnRecycleItemClickListener;
 import wxy.frame.finalframe.adapter.helper.SimpleItemTouchHelperCallback;
 import wxy.frame.finalframe.adapter.wrapper.HeaderAndFooterWrapper;
+import wxy.frame.finalframe.bean.ArticleBean;
 import wxy.frame.finalframe.fragment.BaseFragment;
 import wxy.frame.finalframe.widgets.AutoSwipeRefreshLayout;
 
@@ -65,26 +66,35 @@ public class ArticleListFragment extends BaseFragment implements SwipeRefreshLay
         asr_article.autoRefresh();
         asr_article.setColorSchemeResources(R.color.colorAccent);
         asr_article.setOnRefreshListener(this);
-        final List<Integer> list = new ArrayList<>();
+        final List<ArticleBean> list = new ArrayList<>();
+        ArticleBean articleBean = new ArticleBean();
         switch (type) {
             case 0:
                 for (int i = 0; i < 3; i++) {
-                    list.add(i);
+                    articleBean = articleBean.clone();
+                    articleBean.setName("nihao" + i);
+                    list.add(articleBean);
                 }
                 break;
             case 1:
                 for (int i = 10; i < 20; i++) {
-                    list.add(i);
+                    articleBean = articleBean.clone();
+                    articleBean.setName("nihao" + i);
+                    list.add(articleBean);
                 }
                 break;
             case 2:
                 for (int i = 20; i < 30; i++) {
-                    list.add(i);
+                    articleBean = articleBean.clone();
+                    articleBean.setName("nihao" + i);
+                    list.add(articleBean);
                 }
                 break;
             case 3:
                 for (int i = 30; i < 40; i++) {
-                    list.add(i);
+                    articleBean = articleBean.clone();
+                    articleBean.setName("nihao" + i);
+                    list.add(articleBean);
                 }
                 break;
         }
@@ -120,7 +130,7 @@ public class ArticleListFragment extends BaseFragment implements SwipeRefreshLay
         rv_article.addOnItemTouchListener(new OnRecycleItemClickListener(rv_article) {
             @Override
             public void onItemClick(int position) {
-                startActivity(ArticleDetailActivity.class);
+                startActivity(ArticleDetailActivity.class, list.get(position - headCount));
             }
         });
 

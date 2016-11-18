@@ -65,10 +65,26 @@ public class MyDragViewLayout extends ViewGroup {
             super.onEdgeDragStarted(edgeFlags, pointerId);
         }
 
+        /**
+         * 边界触摸时回调
+         *
+         * @param edgeFlags
+         * @param pointerId
+         */
         @Override
         public void onEdgeTouched(int edgeFlags, int pointerId) {
             LogUtils.e("endflags" + edgeFlags);
             super.onEdgeTouched(edgeFlags, pointerId);
+        }
+
+        /**
+         *
+         * @param edgeFlags
+         * @return  true 锁住当前边界  false 不锁住当前边界
+         */
+        @Override
+        public boolean onEdgeLock(int edgeFlags) {
+            return super.onEdgeLock(edgeFlags);
         }
 
         /**

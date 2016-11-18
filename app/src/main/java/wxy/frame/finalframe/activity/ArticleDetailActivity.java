@@ -5,8 +5,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.MotionEvent;
 import android.view.View;
 
+import org.greenrobot.eventbus.EventBus;
+
 import wxy.frame.finalframe.BaseActivity;
 import wxy.frame.finalframe.R;
+import wxy.frame.finalframe.bean.ArticleBean;
+import wxy.frame.finalframe.event.BaseEvent;
 import wxy.frame.finalframe.util.LogUtils;
 import wxy.frame.finalframe.view.MyButton;
 import wxy.frame.finalframe.view.MyLayout;
@@ -22,9 +26,22 @@ public class ArticleDetailActivity extends BaseActivity {
     public static final String TAG = "ArticleDetailActivity";
     MyButton mbt;
     MyLayout mll;
+    ArticleBean mArticleBean;
 
     public ArticleDetailActivity() {
         super(R.layout.act_article_detail);
+    }
+
+    @Override
+    public void getIntentData() {
+        if (getIntent().getParcelableExtra("data") != null) {
+            mArticleBean = getIntent().getParcelableExtra("data");
+        } else {
+            mArticleBean = new ArticleBean();
+            mArticleBean.setName("文章");
+        }
+        LogUtils.e("ss" + mArticleBean.getName());
+
     }
 
     @Override
@@ -40,13 +57,15 @@ public class ArticleDetailActivity extends BaseActivity {
         });
 
         coll_tb = (CollapsingToolbarLayout) findViewById(R.id.coll_tb);
-        coll_tb.setTitle("文章");
+        coll_tb.setTitle(mArticleBean.getName());
 
         mbt = (MyButton) findViewById(R.id.mbt);
         mbt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 LogUtils.e("MyButton", "onClick");
+                EventBus.getDefault().post(new BaseEvent.CommonEvent("aaa"));
+                finish();
             }
         });
 
@@ -162,5 +181,17 @@ public class ArticleDetailActivity extends BaseActivity {
          }
          */
 
+    }
+
+    @Override
+    protected void registerEventBus() {
+        super.registerEventBus();
+//        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void unRegisterEventBus() {
+        super.unRegisterEventBus();
+//        EventBus.getDefault().unregister(this);
     }
 }

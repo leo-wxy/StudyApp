@@ -2,7 +2,11 @@ package wxy.frame.finalframe.fragment.article;
 
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,8 +14,8 @@ import java.util.List;
 import wxy.frame.finalframe.R;
 import wxy.frame.finalframe.adapter.ArticleFragmentAdapter;
 import wxy.frame.finalframe.bean.BuilderBean;
+import wxy.frame.finalframe.event.BaseEvent;
 import wxy.frame.finalframe.fragment.BaseFragment;
-import wxy.frame.finalframe.util.LogUtils;
 
 /**
  * Created by xixi on 16/6/27.
@@ -23,7 +27,7 @@ public class ArticleFragment extends BaseFragment {
     ArticleFragmentAdapter fragmentAdapter;
 
     public ArticleFragment() {
-        super(R.layout.act_article);
+        super(R.layout.act_article,true);
     }
 
     public static ArticleFragment newInstance() {
@@ -53,7 +57,6 @@ public class ArticleFragment extends BaseFragment {
 
         BuilderBean.Builder builder = new BuilderBean.Builder();
         BuilderBean builderBean = builder.title("你好").text("hello").build();
-        LogUtils.e("buildbean" + builderBean.toString());
 
         fragmentAdapter =
                 new ArticleFragmentAdapter(mActivity.getSupportFragmentManager(), titles);
@@ -65,5 +68,11 @@ public class ArticleFragment extends BaseFragment {
     @Override
     protected void refreshView() {
 
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(BaseEvent.CommonEvent event) {
+        String msg = (String) event.getObject();
+        Log.d(TAG, "onEvent:" + msg);
     }
 }

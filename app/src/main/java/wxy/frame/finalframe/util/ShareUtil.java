@@ -18,6 +18,7 @@ public class ShareUtil {
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.putExtra(Intent.EXTRA_TEXT, text);
         intent.putExtra(Intent.EXTRA_TITLE, title);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(Intent.createChooser(intent, title));
     }
 

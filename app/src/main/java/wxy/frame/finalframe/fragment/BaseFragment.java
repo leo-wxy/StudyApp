@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.greenrobot.eventbus.EventBus;
+
 import wxy.frame.finalframe.BaseActivity;
 import wxy.frame.finalframe.util.SnackBarUtils;
 
@@ -25,9 +27,17 @@ public abstract class BaseFragment extends Fragment {
     protected boolean isVisible;//是否可见
     private boolean isPrepared;
     private boolean isFirst = true;
+    private boolean isNeedEvent = false;
+
+    protected String TAG = getClass().getSimpleName();
 
     public BaseFragment(int mLayoutId) {
         this.mLayoutId = mLayoutId;
+    }
+
+    public BaseFragment(int mLayoutId, boolean isNeedEvent) {
+        this.mLayoutId = mLayoutId;
+        this.isNeedEvent = isNeedEvent;
     }
 
     @Override
@@ -47,7 +57,7 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        isPrepared=true;
+        isPrepared = true;
     }
 
     /**
@@ -103,22 +113,23 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if(getUserVisibleHint()){
+        if (getUserVisibleHint()) {
             setUserVisibleHint(true);
         }
     }
 
     /**
      * 获取fragment是否加载
+     *
      * @param isVisibleToUser
      */
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if(getUserVisibleHint()){
+        if (getUserVisibleHint()) {
             isVisible = true;
             lazyLoad();
-        }else{
+        } else {
             isVisible = false;
 //            onInvisible();
         }
@@ -127,12 +138,39 @@ public abstract class BaseFragment extends Fragment {
     /**
      * 懒加载
      */
-    protected void lazyLoad(){
-        if(!isPrepared || !isVisible || !isFirst){
+    protected void lazyLoad() {
+        if (!isPrepared || !isVisible || !isFirst) {
             return;
         }
         findView(getView());
         refreshView();
         isFirst = false;
+    }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (isNeedEvent)
+            registerEventBus();
+    }
+
+    @Override
+    public void onStop() {
+        if (isNeedEvent)
+            unRegisterEventBus();
+        super.onStop();
+    }
+
+    protected void registerEventBus() {
+        //子类如果需要注册eventbus，则重写此方法
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+    }
+
+    protected void unRegisterEventBus() {
+        //子类如果需要注销eventbus，则重写此方法
+        EventBus.getDefault().unregister(this);
     }
 }

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -13,9 +14,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
+import wxy.frame.finalframe.bean.ResultBean;
 import wxy.frame.finalframe.util.SnackBarUtils;
 import wxy.frame.finalframe.view.swipewindow.SwipeWindowHelper;
 
@@ -30,10 +35,25 @@ public abstract class BaseActivity extends AppCompatActivity {
     public Bundle savedInstanceState;
     private SwipeWindowHelper mSwipeWindowHelper;
     private boolean mIsSupportSlide = true;
+    private boolean mIsScreenShot = false;
+    private boolean mIsNeedEvent = false;
 
     public BaseActivity(int mLayoutId) {
         this.mLayoutId = mLayoutId;
     }
+
+    /**
+     * 不允许截图设置
+     *
+     * @param mLayoutId
+     * @param mIsNeedEvent
+     */
+    public BaseActivity(int mLayoutId, boolean mIsNeedEvent) {
+        this.mLayoutId = mLayoutId;
+        this.mIsNeedEvent = mIsNeedEvent;
+    }
+
+    protected String TAG = getClass().getSimpleName();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,9 +62,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         context = this;
         mLayoutInflater = LayoutInflater.from(this);
         this.savedInstanceState = savedInstanceState;
+        if (mIsScreenShot)
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);//禁止截屏
+        getIntentData();
         findIds();
         initViews();
-
     }
 
     public abstract void findIds();
@@ -70,7 +92,13 @@ public abstract class BaseActivity extends AppCompatActivity {
 
 //        Intent aIntnne=(Intent)intent.clone();
         if (data != null) {
-            intent.putExtra("data", (Parcelable) data);
+
+            Parcel outActivity = Parcel.obtain();
+            ((Parcelable) data).writeToParcel(outActivity, 0);
+            outActivity.setDataPosition(0);
+            intent.putExtra("data", outActivity.marshall());
+            intent.setAction(intent.getAction());
+            outActivity.recycle();
         }
 
         //判断是否有可以跳转使用的Activity，以免发生崩溃
@@ -85,17 +113,20 @@ public abstract class BaseActivity extends AppCompatActivity {
             throw new NullPointerException("No Activity Can Start!");
     }
 
-//获取parcel 数据实例
-//    public void getIntentData(Intent intent, String name) {
-//        byte[] datas = intent.getByteArrayExtra(name);
-//        if (datas != null) {
-//            Parcel in = Parcel.obtain();
-//            in.unmarshall(datas, 0, datas.length);
-//            in.setDataPosition(0);
-//            ResultBean resultBean = ResultBean.CREATOR.createFromParcel(in);
-//            in.recycle();
-//        }
-//    }
+    public abstract void getIntentData();
+
+
+    //获取parcel 数据实例
+    public void getIntentData(Intent intent, String name) {
+        byte[] datas = intent.getByteArrayExtra(name);
+        if (datas != null) {
+            Parcel in = Parcel.obtain();
+            in.unmarshall(datas, 0, datas.length);
+            in.setDataPosition(0);
+            ResultBean resultBean = ResultBean.CREATOR.createFromParcel(in);
+            in.recycle();
+        }
+    }
 
     /**
      * 申请权限检测
@@ -141,5 +172,31 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public void finishAllExcept(Activity activity) {
         MyApplication.getInstance().getActivityLifecycleHelper().finishAllWithoutActivity(activity);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (mIsNeedEvent)
+            registerEventBus();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mIsNeedEvent)
+            unRegisterEventBus();
+    }
+
+    protected void registerEventBus() {
+        //子类如果需要注册eventbus，则重写此方法
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+    }
+
+    protected void unRegisterEventBus() {
+        //子类如果需要注销eventbus，则重写此方法
+        EventBus.getDefault().unregister(this);
     }
 }

@@ -128,7 +128,15 @@ public class MainActivity extends BaseActivity {
 
     }
 
+    @Override
+    public void getIntentData() {
+
+    }
+
     private void setDrawerLeft(NavigationView view) {
+//        appBarLayout.animate().translationY(-200)
+//                .setInterpolator(new LinearInterpolator())
+//                .start();
         view.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {

@@ -5,6 +5,8 @@ package wxy.frame.finalframe.util;
  */
 
 import android.app.Activity;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -18,6 +20,7 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.lang.reflect.Method;
 
@@ -169,4 +172,20 @@ public class InputUtils {
 
         return totalHeight - dpi > 0;
     }
+
+    /**
+     * 复制到粘贴板
+     *
+     * @param context
+     * @param text
+     * @param success
+     */
+    public static void copyToClipBoard(Context context, String text, String success) {
+        ClipData clipData = ClipData.newPlainText(context.getPackageName(), text);
+        ClipboardManager manager = (ClipboardManager) context.getSystemService(
+                Context.CLIPBOARD_SERVICE);
+        manager.setPrimaryClip(clipData);
+        Toast.makeText(context, success, Toast.LENGTH_SHORT).show();
+    }
+
 }
